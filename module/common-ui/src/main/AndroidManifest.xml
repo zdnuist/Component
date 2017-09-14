@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+    package="me.zdnuist.common.ui">
+
+    <uses-sdk
+      android:minSdkVersion="14"
+      />
+
+    <application>
+
+        <service
+          android:name="com.qq.e.comm.DownloadService"
+          android:exported="false" >
+        </service>
+        <activity
+          android:name="com.qq.e.ads.ADActivity"
+          android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
+        </activity>
+
+    </application>
+
+</manifest>

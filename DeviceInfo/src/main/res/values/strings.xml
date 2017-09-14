@@ -1,0 +1,10 @@
+<resources>
+  <string name="app_name">获取手机设备信息</string>
+  <string name="str_device_info">
+    设备信息详情：\n %s
+  </string>
+  <string name="str_network_info">
+    网络信息详情：\n %s
+  </string>
+  <string name="action_settings">设置</string>
+</resources>

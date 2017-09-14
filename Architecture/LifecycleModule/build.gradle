@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+}
+
+dependencies {
+    compile "android.arch.lifecycle:extensions:$rootProject.archVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archVersion"
+
+    compile "android.arch.persistence.room:runtime:$rootProject.archVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archVersion"
+
+    compile "com.alibaba:fastjson:1.1.46.android"
+
+}

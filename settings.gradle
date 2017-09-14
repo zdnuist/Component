@@ -1,0 +1,7 @@
+include ':DeviceInfo', ':picgallery'
+
+include ':lifecycleModule'
+project(':lifecycleModule').projectDir = new File('Architecture/LifecycleModule')
+
+include ':common-ui'
+project(':common-ui').projectDir = new File('module/common-ui')
