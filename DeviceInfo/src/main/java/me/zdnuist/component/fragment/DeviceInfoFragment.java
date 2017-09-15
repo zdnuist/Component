@@ -34,7 +34,7 @@ public class DeviceInfoFragment extends LifecycleFragment {
 
   public static final String TAG = "DeviceInfoFragment";
 
-  private TextView devieInfoShow , networkInfoShow;
+  private TextView devieInfoShow , networkInfoShow , lightInfoShow;
 
   ClipboardManager clipboardManager;
 
@@ -65,6 +65,7 @@ public class DeviceInfoFragment extends LifecycleFragment {
 
     devieInfoShow = view.findViewById(R.id.id_device_info_show);
     networkInfoShow = view.findViewById(R.id.id_network_info_show);
+    lightInfoShow = view.findViewById(R.id.id_light_info_show);
 
     return view;
   }
@@ -86,8 +87,7 @@ public class DeviceInfoFragment extends LifecycleFragment {
     @Override
     public void onSensorChanged(SensorEvent event) {
       //提示当前光照强度
-      Toast.makeText(getActivity(),
-          "当前光照强度：" + event.values[0] + "勒克斯", Toast.LENGTH_SHORT).show();
+      lightInfoShow.setText("当前光照强度：" + event.values[0] + "勒克斯");
     }
 
     @Override

@@ -23,15 +23,25 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import me.zdnuist.pic.gallery.entity.ImgObj;
+import me.zdnuist.pic.gallery.util.FileUtil;
 import me.zdnuist.pic.gallery.viewmodel.PicViewModel;
 
 public class MainActivity extends AppCompatActivity implements LifecycleRegistryOwner{
@@ -74,8 +84,41 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
+        Snackbar.make(view, "是否下载图片？", Snackbar.LENGTH_LONG)
+            .setAction("是", new OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                final ImgObj obj = (ImgObj) ((SectionsPagerAdapter)mViewPager.getAdapter()).getItemObj(mViewPager.getCurrentItem());
+                if(obj != null){
+                  Glide.with(MainActivity.this).download(obj.downloadUrl).listener(
+                      new RequestListener<File>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                            Target<File> target,
+                            boolean isFirstResource) {
+                          return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(File resource, Object model,
+                            Target<File> target,
+                            DataSource dataSource, boolean isFirstResource) {
+                          Log.d(TAG, "target:" + target.toString());
+                          return false;
+                        }
+                      }).into(new SimpleTarget<File>() {
+                    @Override
+                    public void onResourceReady(File resource,
+                        Transition<? super File> transition) {
+                      Log.d(TAG, "File:" + resource.getPath());
+                      String targetName = obj.downloadUrl.substring(obj.downloadUrl.lastIndexOf("/")+1);
+                      FileUtil.copyFile(resource,targetName);
+
+                    }
+                  });
+                }
+              }
+            }).show();
       }
     });
 
@@ -221,6 +264,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
     @Override
     public int getCount() {
       return imgs.size();
+    }
+
+    public ImgObj getItemObj(int position){
+      return imgs.get(position);
     }
 
     @Override

@@ -42,6 +42,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/fab_margin"
     android:layout_gravity="end|bottom"
-    app:srcCompat="@android:drawable/ic_dialog_email"/>
+    app:srcCompat="@android:drawable/ic_menu_directions"/>
 
 </android.support.design.widget.CoordinatorLayout>
