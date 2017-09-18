@@ -36,4 +36,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile project(':lifecycleModule')
     compile project(':common-ui')
+    compile project(':module-fragmentation')
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

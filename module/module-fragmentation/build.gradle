@@ -1,0 +1,18 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+    }
+}
+
+dependencies {
+    compile 'me.yokeyword:fragmentation-core:1.1.6'
+    compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
+
+    provided 'com.android.support:appcompat-v7:26.+'
+}
