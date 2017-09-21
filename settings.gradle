@@ -1,4 +1,4 @@
-include ':DeviceInfo', ':picgallery', ':proxy'
+include ':DeviceInfo', ':picgallery', ':proxy', ':editwebview'
 
 include ':lifecycleModule'
 project(':lifecycleModule').projectDir = new File('Architecture/LifecycleModule')
@@ -7,4 +7,4 @@ include ':common-ui'
 project(':common-ui').projectDir = new File('module/common-ui')
 
 include ':module-fragmentation'
-project(':module-fragmentation').projectDir = new  File('module/module-fragmentation')
+project(':module-fragmentation').projectDir = new File('module/module-fragmentation')
