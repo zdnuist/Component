@@ -1,5 +1,7 @@
 package me.zdnuist.proxy.util;
 
+import android.util.Log;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,8 +22,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
  */
 
 public class RSSPaser {
+  private static final String TAG = "RSSPaser";
 
-  static OkHttpClient okHttpClient = new OkHttpClient.Builder().hostnameVerifier(new HostnameVerifier() {
+  static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+      .addInterceptor(new StethoInterceptor()).hostnameVerifier(new HostnameVerifier() {
     @Override
     public boolean verify(String hostname, SSLSession session) {
       return true;
@@ -30,9 +34,11 @@ public class RSSPaser {
 
 
   public static InputStream getRssConentFromUrl(String url){
+    Log.w(TAG , "getRssConentFromUrl");
     Request.Builder builder = new Builder().url(url).cacheControl(new CacheControl.Builder().build());
     try {
-      Response response = okHttpClient.newCall(builder.build()).execute();
+      Response response = okHttpClient.newCall(builder.build())
+          .execute();
       if(response.isSuccessful()){
         return response.body().byteStream();
       }

@@ -23,7 +23,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
   private LayoutInflater mInflater;
   private List<ZhiHu> datas;
 
-  public MyRecycleAdapter(Context context){
+  public MyRecycleAdapter(Context context) {
     mInflater = LayoutInflater.from(context);
     datas = new ArrayList<>();
   }
@@ -35,7 +35,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
 
   @Override
   public ZhiHuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = mInflater.inflate(R.layout.layout_item_recycle , parent, false);
+    View view = mInflater.inflate(R.layout.layout_item_recycle, parent, false);
     ZhiHuViewHolder holder = new ZhiHuViewHolder(view);
     return holder;
   }
@@ -44,7 +44,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
   public void onBindViewHolder(ZhiHuViewHolder holder, int position) {
 
     ZhiHu zhiHu = datas.get(position);
-    if(zhiHu != null){
+    if (zhiHu != null) {
       holder.titltView.setText(zhiHu.title);
       holder.linkView.setText(zhiHu.link);
       holder.descView.setText(Html.fromHtml(zhiHu.des));
@@ -57,7 +57,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
     return datas.size();
   }
 
-  static class ZhiHuViewHolder extends RecyclerView.ViewHolder{
+  static class ZhiHuViewHolder extends RecyclerView.ViewHolder {
 
     public TextView titltView;
     public TextView linkView;
@@ -70,6 +70,18 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
       linkView.setAutoLinkMask(Linkify.WEB_URLS);
       descView = itemView.findViewById(R.id.webView);
       descView.setAutoLinkMask(Linkify.WEB_URLS);
+    }
+
+    public void bindTo(ZhiHu zhiHu) {
+      titltView.setText(zhiHu.title);
+      linkView.setText(zhiHu.link);
+      descView.setText(Html.fromHtml(zhiHu.des));
+    }
+
+    public void clear() {
+      titltView.setText("");
+      linkView.setText("");
+      descView.setText("");
     }
   }
 

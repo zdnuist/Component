@@ -1,9 +1,10 @@
-package me.zdnuist.proxy.fragment;
+package me.zdnuist.proxy.fragment_new;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,28 +19,27 @@ import android.view.ViewGroup;
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.DefaultSort;
-import java.util.List;
 import me.zdnuist.module.fragmentation.BaseSupportFragment;
 import me.zdnuist.proxy.R;
-import me.zdnuist.proxy.adapter.MyRecycleAdapter;
+import me.zdnuist.proxy.adapter.ZhihuAdapter;
 import me.zdnuist.proxy.entity.ZhiHu;
 import me.zdnuist.proxy.viewmodel.ZhiHuViewModel;
 
 /**
- * Created by zd on 2017/9/18.
+ * Created by zd on 2017/9/22.
  */
 
-public class RecycleViewFragment extends BaseSupportFragment {
+public class PageListFragment extends BaseSupportFragment {
 
-  public static final String TAG = "RecycleViewFragment";
+  public static final String TAG = "PageListFragment";
 
-  public static RecycleViewFragment newInstance(){
-    RecycleViewFragment fragment = new RecycleViewFragment();
+  public static PageListFragment newInstance(){
+    PageListFragment fragment = new PageListFragment();
     return fragment;
   }
 
   private RecyclerView mRecycleView;
-  private MyRecycleAdapter mAdapter;
+  private ZhihuAdapter mAdapter;
   private Animator spruceAnimator;
 
   @Nullable
@@ -60,8 +60,8 @@ public class RecycleViewFragment extends BaseSupportFragment {
         initSpruce();
       }
     });
-    mAdapter = new MyRecycleAdapter(getContext());
-    mRecycleView.setAdapter(mAdapter);
+    mAdapter = new ZhihuAdapter();
+//    mRecycleView.setAdapter(mAdapter);
     mRecycleView.addItemDecoration(new DividerItemDecoration(mRecycleView.getContext(),
         LinearLayoutManager.VERTICAL));
   }
@@ -88,12 +88,12 @@ public class RecycleViewFragment extends BaseSupportFragment {
 
     ZhiHuViewModel viewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
     Log.d(TAG, "zhihuViewModel:" + viewModel.hashCode());
-    viewModel.getObservableList().observe(this, new Observer<List<ZhiHu>>() {
+
+    viewModel.getObservablePageList().observe(this, new Observer<PagedList<ZhiHu>>() {
       @Override
-      public void onChanged(@Nullable List<ZhiHu> zhiHus) {
-        if(zhiHus != null){
-            mAdapter.setDatas(zhiHus);
-        }
+      public void onChanged(@Nullable PagedList<ZhiHu> zhiHus) {
+        mAdapter.setList(zhiHus);
+        mRecycleView.setAdapter(mAdapter);
       }
     });
 

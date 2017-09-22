@@ -30,6 +30,7 @@ public class FirstFragment extends BaseSupportFragment{
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+
     if (findChildFragment(ViewPagerFragment.class) == null) {
       loadRootFragment(R.id.fl_first_container, ViewPagerFragment.newInstance());
     }

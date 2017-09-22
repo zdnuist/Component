@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import me.zdnuist.module.fragmentation.BaseSupportFragment;
 import me.zdnuist.proxy.R;
+import me.zdnuist.proxy.fragment_new.PageListFragment;
 
 /**
  * Created by zd on 2017/9/18.
@@ -58,7 +59,7 @@ public class ViewPagerFragment extends BaseSupportFragment {
     @Override
     public Fragment getItem(int position) {
       if(position == 0){
-        return RecycleViewFragment.newInstance();
+        return PageListFragment.newInstance();
       }
       return PageFragment.newInstance(datas.get(position));
     }

@@ -6,10 +6,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.paging.PagedList;
 import android.support.annotation.Nullable;
 import java.io.InputStream;
 import java.util.List;
 import me.zdnuist.lifecycle.util.AppExecutors;
+import me.zdnuist.proxy.ProxyApp;
+import me.zdnuist.proxy.database.ProxyDatabase;
 import me.zdnuist.proxy.entity.ZhiHu;
 import me.zdnuist.proxy.util.RSSPaser;
 
@@ -30,11 +33,21 @@ public class ZhiHuViewModel extends AndroidViewModel {
 
   private LiveData<List<ZhiHu>> mObservableList;
 
+  private LiveData<PagedList<ZhiHu>> mObservablePageList;
+
 
   private final MediatorLiveData<List<ZhiHu>> result = new MediatorLiveData<>();
 
   public ZhiHuViewModel(Application application) {
     super(application);
+
+    mObservablePageList = ProxyApp.getInstance().getDatabase().getZhiHuDao().getZhiHus().create(
+                /* initial load position */ 0,
+        new PagedList.Config.Builder()
+            .setPageSize(10)
+            .setPrefetchDistance(10)
+            .build());
+
 
     result.addSource(ABSENT, new Observer() {
       @Override
@@ -45,6 +58,12 @@ public class ZhiHuViewModel extends AndroidViewModel {
             InputStream is = RSSPaser.getRssConentFromUrl("https://www.zhihu.com/rss");
             if(is != null){
               final List<ZhiHu> results = RSSPaser.parseZhihuRss(is);
+              AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                  ProxyApp.getInstance().getDatabase().getZhiHuDao().insertZhiHu(results);
+                }
+              });
               if(results != null){
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                   @Override
@@ -65,5 +84,9 @@ public class ZhiHuViewModel extends AndroidViewModel {
 
   public LiveData<List<ZhiHu>> getObservableList(){
     return mObservableList;
+  }
+
+  public LiveData<PagedList<ZhiHu>> getObservablePageList() {
+    return mObservablePageList;
   }
 }
