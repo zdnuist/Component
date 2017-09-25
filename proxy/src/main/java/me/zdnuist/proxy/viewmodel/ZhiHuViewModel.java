@@ -35,11 +35,19 @@ public class ZhiHuViewModel extends AndroidViewModel {
 
   private LiveData<PagedList<ZhiHu>> mObservablePageList;
 
+  private final MediatorLiveData<PagedList<ZhiHu>> pageListResult = new MediatorLiveData<>();
 
   private final MediatorLiveData<List<ZhiHu>> result = new MediatorLiveData<>();
 
   public ZhiHuViewModel(Application application) {
     super(application);
+    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+      @Override
+      public void run() {
+        ProxyApp.getInstance().getDatabase().getZhiHuDao().deleteAll();
+      }
+    });
+
 
     mObservablePageList = ProxyApp.getInstance().getDatabase().getZhiHuDao().getZhiHus().create(
                 /* initial load position */ 0,
@@ -48,6 +56,41 @@ public class ZhiHuViewModel extends AndroidViewModel {
             .setPrefetchDistance(10)
             .build());
 
+//    pageListResult.addSource(mObservablePageList, new Observer<PagedList<ZhiHu>>() {
+//      @Override
+//      public void onChanged(@Nullable PagedList<ZhiHu> zhiHus) {
+//        pageListResult.removeSource(mObservablePageList);
+//        AppExecutors.getInstance().networkIO().execute(new Runnable() {
+//          @Override
+//          public void run() {
+//            InputStream is = RSSPaser.getRssConentFromUrl("https://www.zhihu.com/rss");
+//            if(is != null){
+//              final List<ZhiHu> results = RSSPaser.parseZhihuRss(is);
+//              AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                  ProxyApp.getInstance().getDatabase().getZhiHuDao().insertZhiHu(results.subList(0,5));
+//
+//                  AppExecutors.getInstance().mainThread().execute(new Runnable(){
+//                    @Override
+//                    public void run() {
+//                      pageListResult.addSource(mObservablePageList, new Observer<PagedList<ZhiHu>>() {
+//                        @Override
+//                        public void onChanged(@Nullable PagedList<ZhiHu> zhiHus) {
+//                          pageListResult.setValue(zhiHus);
+//                        }
+//                      });
+//                    }
+//                  });
+//                }
+//              });
+//            }
+//          }
+//        });
+//      }
+//    });
+
+    fetchDatas();
 
     result.addSource(ABSENT, new Observer() {
       @Override
@@ -88,5 +131,25 @@ public class ZhiHuViewModel extends AndroidViewModel {
 
   public LiveData<PagedList<ZhiHu>> getObservablePageList() {
     return mObservablePageList;
+  }
+
+  int i = 0;
+  public void fetchDatas(){
+    AppExecutors.getInstance().networkIO().execute(new Runnable() {
+      @Override
+      public void run() {
+        InputStream is = RSSPaser.getRssConentFromUrl("https://www.zhihu.com/rss");
+        if(is != null){
+          final List<ZhiHu> results = RSSPaser.parseZhihuRss(is);
+          AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+              ProxyApp.getInstance().getDatabase().getZhiHuDao().insertZhiHu(results.subList(i*5,(i+1)*5));
+              i++;
+            }
+          });
+        }
+      }
+    });
   }
 }

@@ -75,7 +75,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
     public void bindTo(ZhiHu zhiHu) {
       titltView.setText(zhiHu.title);
       linkView.setText(zhiHu.link);
-      descView.setText(Html.fromHtml(zhiHu.des));
+//      descView.setText(Html.fromHtml(zhiHu.des));
     }
 
     public void clear() {

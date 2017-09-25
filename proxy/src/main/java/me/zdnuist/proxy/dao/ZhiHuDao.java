@@ -22,4 +22,7 @@ public interface ZhiHuDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   public void insertZhiHu(List<ZhiHu> zhiHuList);
 
+  @Query("delete from ZhiHu")
+  public void deleteAll();
+
 }

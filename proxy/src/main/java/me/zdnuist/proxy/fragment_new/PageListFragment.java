@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView.State;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
@@ -64,6 +65,7 @@ public class PageListFragment extends BaseSupportFragment {
 //    mRecycleView.setAdapter(mAdapter);
     mRecycleView.addItemDecoration(new DividerItemDecoration(mRecycleView.getContext(),
         LinearLayoutManager.VERTICAL));
+    mRecycleView.setAdapter(mAdapter);
   }
 
   @Override
@@ -75,27 +77,38 @@ public class PageListFragment extends BaseSupportFragment {
   }
 
   private void initSpruce() {
+    if(mRecycleView.getChildCount() == 0) return;
+
     spruceAnimator = new Spruce.SpruceBuilder(mRecycleView)
         .sortWith(new DefaultSort(100))
         .animateWith(DefaultAnimations.shrinkAnimator(mRecycleView, 800),
             ObjectAnimator.ofFloat(mRecycleView, "translationX", -mRecycleView.getWidth(), 0f).setDuration(800))
         .start();
+
+    mRecycleView.getChildAt(mRecycleView.getChildCount()-1).setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        viewModel.fetchDatas();
+      }
+    });
+
   }
 
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    ZhiHuViewModel viewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
+    viewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
     Log.d(TAG, "zhihuViewModel:" + viewModel.hashCode());
 
     viewModel.getObservablePageList().observe(this, new Observer<PagedList<ZhiHu>>() {
       @Override
       public void onChanged(@Nullable PagedList<ZhiHu> zhiHus) {
         mAdapter.setList(zhiHus);
-        mRecycleView.setAdapter(mAdapter);
       }
     });
 
   }
+
+  ZhiHuViewModel viewModel;
 }
