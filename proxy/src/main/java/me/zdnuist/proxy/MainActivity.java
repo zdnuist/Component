@@ -96,14 +96,13 @@ public class MainActivity extends BaseFragmentWrapperActivity {
       mFragments[FIRST] = FirstFragment.newInstance();
       mFragments[SECOND] = SecondFragment.newInstance();
       mFragments[THIRD] = ThirdFragment.newInstance();
-
-      loadMultipleRootFragment(R.id.content, FIRST ,mFragments[FIRST],mFragments[SECOND],mFragments[THIRD]);
     }else{
       mFragments[FIRST] = firstFragment;
       mFragments[SECOND] = findFragment(SecondFragment.class);
       mFragments[THIRD] = findFragment(ThirdFragment.class);
     }
 
+    loadMultipleRootFragment(R.id.content, FIRST ,mFragments[FIRST],mFragments[SECOND],mFragments[THIRD]);
 
     BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

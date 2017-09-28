@@ -2,6 +2,7 @@ package me.zdnuist.proxy;
 
 import android.arch.persistence.room.Room;
 import com.facebook.stetho.Stetho;
+import me.yokeyword.fragmentation.Fragmentation;
 import me.zdnuist.app.BaseApplication;
 import me.zdnuist.proxy.database.ProxyDatabase;
 
@@ -25,6 +26,12 @@ public class ProxyApp extends BaseApplication {
     db = Room.databaseBuilder(this.getApplicationContext(),
         ProxyDatabase.class, ProxyDatabase.DATABASE_NAME)
         .build();
+
+    Fragmentation.builder()
+        // 显示悬浮球 ; 其他Mode:SHAKE: 摇一摇唤出   NONE：隐藏
+        .stackViewMode(Fragmentation.BUBBLE)
+        .debug(BuildConfig.DEBUG)
+             .install();
   }
 
   public ProxyDatabase getDatabase() {
