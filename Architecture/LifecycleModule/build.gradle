@@ -23,7 +23,7 @@ dependencies {
     compile "android.arch.persistence.room:runtime:$rootProject.archVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archVersion"
 
-    compile "android.arch.paging:runtime:1.0.0-alpha2"
+    compile "android.arch.paging:runtime:1.0.0-alpha3"
 
     compile "com.alibaba:fastjson:1.1.46.android"
 
