@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package com.realcloud.campus.proto;
+
+import "User.proto";
+
+message Follow {
+  enum State {
+    BOTH_NOT_FOLLOW = 0; //互不关注
+    FOLLOW_SOMEONE = 1;  //单向关注
+    BOTH_FOLLOW = 2;     //互相关注
+    FORCED_FOLLOW = 3;    //强制关注
+    SOMEONE_FOLLOW_ME = 4;  //被关注
+  }
+  int32 status = 1;
+  string response = 2;
+  UEntity entity = 3;
+  int32 state = 4;
+  int64 time = 5;
+  int64 updateTime = 6;
+  string alias = 7; // 别名
+}
+
+message Follows {
+  int32 status = 1;
+  string response = 2;
+  repeated Follow follows = 3;
+  int64 after = 4;
+  bool all = 5;
+}

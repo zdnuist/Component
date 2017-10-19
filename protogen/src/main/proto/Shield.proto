@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package com.realcloud.campus.proto;
+
+import "User.proto";
+
+message Shield {
+  enum State {
+    DEFAULT = 0; //默认
+    SHIELD_POST = 2;  //屏蔽帖子 1<<1
+    SHIELD_MSG = 4;  //屏蔽消息  1<<2
+    SHIELD_USER = 8;  //黑名单   1<<3
+  }
+  int32 status = 1;
+  string response = 2;
+  UEntity entity = 3;
+  int32 state = 4; // 屏蔽类型
+  int64 time = 5; // 屏蔽时间
+}
+
+message Shields {
+  int32 status = 1;
+  string response = 2;
+  int64 after = 3; // 列表时间
+  repeated Shield shield = 4;
+  bool all = 5;
+}
+

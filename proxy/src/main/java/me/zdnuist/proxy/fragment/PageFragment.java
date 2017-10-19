@@ -3,11 +3,14 @@ package me.zdnuist.proxy.fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import java.util.List;
 import me.zdnuist.module.fragmentation.BaseSupportFragment;
@@ -43,14 +46,22 @@ public class PageFragment extends BaseSupportFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.layout_fragment_pager,container,false);
+    View view = inflater.inflate(R.layout.layout_radio_group,container,false);
     initView(view);
     return view;
   }
 
   private void initView(View view) {
-    TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
-    tvTitle.setText(mTitle);
+//    TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
+//    tvTitle.setText(mTitle);
+
+    RadioGroup radioGroup = view.findViewById(R.id.id_radio_group);
+    radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        Log.d("zd" , "checkId");
+      }
+    });
   }
 
   @Override

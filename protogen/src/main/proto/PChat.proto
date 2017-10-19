@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package com.realcloud.campus.proto;
+
+import "User.proto";
+
+message ChatEntity {
+  int64 type = 1;
+  string m = 2;
+  string src = 3;
+  int32 width = 4;
+  int32 height = 5;
+  int32 duration = 6;
+  string link = 7;
+  string redirect = 8;
+  string title = 9;
+  string size = 10;
+  string count = 11;
+  string price = 12;
+  int64 id = 13;
+  double lat = 14;
+  double lng = 15;
+  repeated int64 ids = 16; // @用户列表
+}
+
+message PChat {
+  enum Direction {
+    RECEIVE = 0;
+    SEND = 1;
+  }
+  enum State {
+    UNREAD = 0;
+    RETREAT = 1;
+    READ = 2;
+    DISABLED = 3;
+    UNDELIVED = 4;
+  }
+  int32 status = 1;
+  string response = 2;
+  int64 id = 3;
+  int64 userId = 4;
+  UEntity entity = 5;
+  ChatEntity chat = 6;
+  int64 time = 7;
+  State state = 8;
+  Direction direction = 9;
+  repeated int64 ids = 10; // 接收者或者消息ID
+}
+
+message PChats {
+  int32 status = 1;
+  string response = 2;
+  repeated PChat chats = 3;
+  int64 after = 4;
+  bool all = 5;
+}
+
+

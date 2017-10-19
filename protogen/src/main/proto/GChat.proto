@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package com.realcloud.campus.proto;
+
+import "PChat.proto";
+import "User.proto";
+
+message GChat {
+  enum MState {
+    AVALIABLE = 0;
+    RETREAT = 1;
+  }
+  int32 status = 1;
+  string response = 2;
+  int64 id = 3;
+  int64 userId = 4;
+  int64 groupId = 5;
+  UEntity entity = 6;
+  ChatEntity chat = 7;
+  int64 time = 8;
+  MState state = 9;
+  int32 floor = 10;
+}
+
+message GChats {
+  int32 status = 1;
+  string response = 2;
+  repeated GChat chats = 3;
+  repeated GEntity groups = 4;
+  repeated GMember members = 5;
+  int64 after = 6;
+  bool all = 7;
+}
+
+enum GState {
+  DEFAULT = 0;      // 客户端忽略
+  NOTMEMBER = 1;    // 非小组成员
+  MEMBER = 2;       // 小组成员接受推送消息并提醒
+  MEMBERNONOTIFY = 3; // 小组成员接受推送消息不提醒
+  MEMBERNOMSG = 4;  // 小组成员不接受推送消息
+}
+
+message GEntity {
+  int32 status = 1;
+  string response = 2;
+  int64 id = 3;
+  string name = 4;
+  int64 ownerId = 5;
+  int32 count = 6;
+  repeated string names = 7;
+  repeated string cover = 8;
+  int32 version = 9;
+  int32 floor = 10;
+  int32 atFloor = 11;
+  repeated int64 ids = 12;  // 小组成员id
+  GChat chat = 13;
+  GState state = 14;
+}
+
+message GMember {
+  int64 userId = 1;
+  UEntity entity = 2;
+  GState state = 3;
+  int64 time = 4;
+}

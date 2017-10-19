@@ -1,4 +1,4 @@
-include ':DeviceInfo', ':picgallery', ':proxy', ':editwebview', ':mocktest'
+include ':DeviceInfo', ':picgallery', ':proxy', ':editwebview', ':mocktest', ':protogen'
 
 include ':lifecycleModule'
 project(':lifecycleModule').projectDir = new File('Architecture/LifecycleModule')

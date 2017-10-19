@@ -1,5 +1,7 @@
 package me.zdnuist.proxy.adapter;
 
+import static android.text.Html.FROM_HTML_MODE_LEGACY;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -15,6 +17,7 @@ import me.zdnuist.proxy.adapter.MyRecycleAdapter.ZhiHuViewHolder;
 import me.zdnuist.proxy.entity.ZhiHu;
 
 /**
+ * @author zd
  * Created by zd on 2017/9/18.
  */
 
@@ -47,7 +50,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
     if (zhiHu != null) {
       holder.titltView.setText(zhiHu.title);
       holder.linkView.setText(zhiHu.link);
-      holder.descView.setText(Html.fromHtml(zhiHu.des));
+      holder.descView.setText(Html.fromHtml(zhiHu.des,FROM_HTML_MODE_LEGACY));
     }
 
   }

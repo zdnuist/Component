@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package com.realcloud.campus.proto;
+
+message UEntity {
+  int64 userId = 1;
+  string name = 2;
+  string avatar = 3;
+  int32 verifyState = 4;
+  string school = 5;
+}
+
+message UserStats {
+  int32 followCount = 1; // 关注数量(仅他人有效)
+  int32 fanCount = 2; // 粉丝数量
+  int32 markCount = 3; // 收藏数量(仅自己空间有)
+}
+
+message User {
+  enum Gender {
+    UNKOWN = 0;
+    MALE = 1;
+    FEMALE = 2;
+  }
+  int32 status = 1;
+  string response = 2;
+  int64 id = 3; // 用户唯一ID
+  string uuid = 4; // 用户快速ID
+  string name = 5; // 用户名 (1~6个字)
+  string avatar = 6; // 用户头像 (相对路径，如果是http开头则是全路径)
+  int32 gender = 7; // 性别 (1-男，2-女，0-未知)
+  int32 verifyState = 8; // 星级验证 (0~未做认证，1<<0认证中,1<<1~实名认证，1<<2~话题主持人，小秘书由客户端根据关注状态维护)
+  string verifyTitle = 9; // 星级验证提示 (已服务器为准)
+  int64 schoolId = 10; // 学校ID
+  string school = 11; // 学校
+  int64 departmentId = 12; // 院系ID
+  string department = 13; // 院系名称
+  int64 year = 14; //  入学年月 (ms)
+  int64 birthday = 15; // 生日   (ms)
+  int64 birthCityId = 16; // 家乡市ID    (省份和地市有客户端关联)
+  string coverUrl = 17; // 空间背景图
+  string signature = 18; // 签名(40个字)
+  int32 followVersion = 19; // 关注版本(默认为0)
+  UserStats userStats = 20; // 用户实时计数
+
+  int64 privilege = 21; // 用户权限(32为江苏电信宽带用户)
+  string wifiUrl = 22; // 宽带入口(非江苏电信宽带用户使用)
+  int64 role = 23; // 用户角色(ROLE_THIRD = 1, ROLE_MOBILE = 2, ROLE_CAMPUS = 4, ROLE_MANAGER = 12, ROLE_ADMIN = 29)
+  string roleName = 24; // 仅用于服务端
+  // 24~32 用于后加字段
+  string account = 33; // 用户手机账户(只有登录、注册、修改手机号时使用)
+  string password = 34; // 用户密码(仅注册，修改密码，重置密码时使用)
+  string code = 35; // 验证码
+  int64 fid = 36; // 头像文件ID,空间背景图ID,实名认证文件ID
+  int64 fid2 = 37; // 实名认证文件2ID
+}

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package com.realcloud.campus.proto;
+
+message Setting {
+  int32 status = 1;
+  string response = 2;
+  map<string, string> values = 3; //默认封面、系统设置、用户设置、同步机制更新
+  int64 syncTime = 4;
+}
