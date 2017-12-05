@@ -7,9 +7,13 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.paging.PagedList;
+import android.arch.persistence.room.InvalidationTracker;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 import me.zdnuist.lifecycle.util.AppExecutors;
 import me.zdnuist.proxy.ProxyApp;
 import me.zdnuist.proxy.database.ProxyDatabase;
@@ -104,14 +108,14 @@ public class ZhiHuViewModel extends AndroidViewModel {
               AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                  ProxyApp.getInstance().getDatabase().getZhiHuDao().insertZhiHu(results);
+                  ProxyApp.getInstance().getDatabase().getZhiHuDao().insertZhiHu(results.subList(i*5,(i+1)*5));
                 }
               });
               if(results != null){
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                   @Override
                   public void run() {
-                    result.setValue(results);
+                    result.setValue(results.subList(i*5,(i+1)*5));
                   }
                 });
 
@@ -123,6 +127,18 @@ public class ZhiHuViewModel extends AndroidViewModel {
     });
 
     mObservableList = result;
+
+
+  }
+
+  private void addDbObserver(){
+    InvalidationTracker.Observer mObserver = new InvalidationTracker.Observer("ZhiHu") {
+      @Override
+      public void onInvalidated(@NonNull Set<String> tables) {
+        Log.w("zd" ,"onInvalidated");
+      }
+    };
+    ProxyApp.getInstance().getDatabase().getInvalidationTracker().addWeakObserver(mObserver);
   }
 
   public LiveData<List<ZhiHu>> getObservableList(){
@@ -144,6 +160,7 @@ public class ZhiHuViewModel extends AndroidViewModel {
           AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
+              addDbObserver();
               ProxyApp.getInstance().getDatabase().getZhiHuDao().insertZhiHu(results.subList(i*5,(i+1)*5));
               i++;
             }

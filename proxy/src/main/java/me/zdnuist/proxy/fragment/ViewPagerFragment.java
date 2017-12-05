@@ -41,7 +41,7 @@ public class ViewPagerFragment extends BaseSupportFragment {
 
   private void initView(View view){
     mViewPager = view.findViewById(R.id.viewPager);
-    mAdapter = new MyAdapter(getChildFragmentManager(),Arrays.asList("FIRST PAGE" , "SECOND FAGE"));
+    mAdapter = new MyAdapter(getChildFragmentManager(),Arrays.asList("FIRST PAGE"/* , "SECOND FAGE"*/));
     mViewPager.setAdapter(mAdapter);
 
   }

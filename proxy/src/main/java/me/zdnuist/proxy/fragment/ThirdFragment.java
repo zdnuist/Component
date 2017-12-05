@@ -31,7 +31,7 @@ public class ThirdFragment  extends BaseSupportFragment{
     super.onLazyInitView(savedInstanceState);
 
     if (findChildFragment(PageFragment.class) == null) {
-      loadRootFragment(R.id.fl_first_container, PageFragment.newInstance("THIRD PRAGMENT"));
+      loadRootFragment(R.id.fl_first_container, RecycleViewFragment.newInstance());
     }
   }
 }

@@ -5,18 +5,34 @@ package com.realcloud.campus.proto;
 import "User.proto";
 
 message ChatEntity {
-  int64 type = 1;
+  enum Type {
+    TEXT = 0;           // 文字         -> m                                     < m, type
+    IMAGE = 1;          // 图片         -> src, width, height, size              < id, type
+    GIF = 2;            // gif          -> src, width, height, size              < id, type
+    VIDEO = 3;          // 视频         -> src, width, height, duration, size    < id, type
+    AUDIO = 4;          // 音频         -> src, duration, size                   < id, type
+    VOICE = 5;          // 语音         -> src, duration, size                   < id, type
+    DYNAMICEMOJI = 6;   // 动态图       -> src, width, height, m                 < id, type
+    MICROVIDEO = 7;     // 微视频        -> src, width, height, duration, size    < id, type
+    BONUS = 8;          // 红包         -> m, price, count, id                   < id, type
+    SYSTEMTIP = 9;      // 系统提醒      -> m, redirect                           <
+    POSITION = 10;      // 位置         -> lat, lng, m                           < type, lat, lng
+    SHARE = 11;         // 分享         -> title, m, link, redirect              < type, title, m, link, redirect
+    ATLIST = 12;        // @, 小组邀请, 小组剔除              -> ids, m           < type, ids, m
+    USEREMOJI = 13;     // 用户动态图    ->src, width, height, m                 < id, type
+  }
+  Type type = 1;
   string m = 2;
   string src = 3;
   int32 width = 4;
   int32 height = 5;
-  int32 duration = 6;
+  int64 duration = 6;
   string link = 7;
   string redirect = 8;
   string title = 9;
-  string size = 10;
-  string count = 11;
-  string price = 12;
+  int64 size = 10;
+  int32 count = 11;
+  int64 price = 12;
   int64 id = 13;
   double lat = 14;
   double lng = 15;

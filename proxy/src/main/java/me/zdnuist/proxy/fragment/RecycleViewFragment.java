@@ -64,6 +64,16 @@ public class RecycleViewFragment extends BaseSupportFragment {
     mRecycleView.setAdapter(mAdapter);
     mRecycleView.addItemDecoration(new DividerItemDecoration(mRecycleView.getContext(),
         LinearLayoutManager.VERTICAL));
+
+    view.findViewById(R.id.id_refresh).setOnClickListener(new View.OnClickListener(){
+
+      @Override
+      public void onClick(View v) {
+        if(viewModel != null){
+          viewModel.fetchDatas();
+        }
+      }
+    });
   }
 
   @Override
@@ -82,15 +92,19 @@ public class RecycleViewFragment extends BaseSupportFragment {
         .start();
   }
 
+  ZhiHuViewModel viewModel;
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    ZhiHuViewModel viewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
+    viewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
     Log.d(TAG, "zhihuViewModel:" + viewModel.hashCode());
     viewModel.getObservableList().observe(this, new Observer<List<ZhiHu>>() {
       @Override
       public void onChanged(@Nullable List<ZhiHu> zhiHus) {
+        if(zhiHus != null) {
+          Log.d(TAG, "zhihuViewModel list:" + zhiHus.size());
+        }
         if(zhiHus != null){
             mAdapter.setDatas(zhiHus);
         }

@@ -15,7 +15,26 @@ protobuf {
     //这里配置生成目录，编译后会在build的目录下生成对应的java文件
     generateProtoTasks {
         all()*.plugins {
-            javalite {}
+            javalite {
+            }
+        }
+    }
+}
+
+task copyProtoc(){
+    doLast {
+        copy {
+            from "build\\generated\\source\\proto\\debug\\javalite\\com\\realcloud\\campus\\proto\\"
+            into "C:\\zdnuist\\work_svn\\v5.3_R\\LoochaCampus\\src\\com\\realcloud\\campus\\proto\\"
+        }
+    }
+}
+
+task copyProtocFromSvn(){
+    doLast{
+        copy{
+            from "C:\\zdnuist\\work_svn\\loocha_doc\\server-api\\proto\\"
+            into "G:\\zdnuist\\work_svn\\Component\\protogen\\src\\main\\proto\\"
         }
     }
 }
@@ -39,6 +58,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+	
+	 lintOptions {
+        abortOnError false
     }
 }
 

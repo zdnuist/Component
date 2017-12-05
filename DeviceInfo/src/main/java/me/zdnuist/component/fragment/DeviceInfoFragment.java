@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,6 +17,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,13 +63,22 @@ public class DeviceInfoFragment extends LifecycleFragment {
         Snackbar.make(view, "已复制到剪切板中", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show();
 
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true);
+
+        int[] attribute = new int[] { android.R.attr.actionBarSize };
+        TypedArray array = getContext().obtainStyledAttributes(typedValue.resourceId, attribute);
+        int size = array.getDimensionPixelSize(0,-1);
+        array.recycle();
+
+        Log.e(TAG,"actionBarSize:" + typedValue.toString());
+
       }
     });
 
     devieInfoShow = view.findViewById(R.id.id_device_info_show);
     networkInfoShow = view.findViewById(R.id.id_network_info_show);
     lightInfoShow = view.findViewById(R.id.id_light_info_show);
-
     return view;
   }
 

@@ -5,11 +5,15 @@ package com.realcloud.campus.proto;
 import "PChat.proto";
 import "User.proto";
 
+enum MState {
+  NORMAL = 0;
+  RETREAT = 1;
+  INVITE = 2;
+  KICK = 3;
+  RENAME = 4;
+}
+
 message GChat {
-  enum MState {
-    AVALIABLE = 0;
-    RETREAT = 1;
-  }
   int32 status = 1;
   string response = 2;
   int64 id = 3;
@@ -25,11 +29,12 @@ message GChat {
 message GChats {
   int32 status = 1;
   string response = 2;
-  repeated GChat chats = 3;
-  repeated GEntity groups = 4;
-  repeated GMember members = 5;
-  int64 after = 6;
-  bool all = 7;
+  int64 after = 3;
+  bool all = 4;
+  repeated GChat chats = 5;
+  repeated GEntity groups = 6;
+  repeated GMember members = 7;
+  repeated GLMessage messages = 8;
 }
 
 enum GState {
@@ -49,17 +54,37 @@ message GEntity {
   int32 count = 6;
   repeated string names = 7;
   repeated string cover = 8;
-  int32 version = 9;
-  int32 floor = 10;
-  int32 atFloor = 11;
-  repeated int64 ids = 12;  // 小组成员id
-  GChat chat = 13;
-  GState state = 14;
+  int32 floor = 9;
+  int32 uFloor = 10;
+  GState state = 11;
+  int64 time = 12;
+  int64 updateTime = 13;
+  int64 memberTime = 14;
+  GChat chat = 15;
+  repeated int64 ids = 16;  // 小组成员id
+  int64 msgTime = 17;
+}
+
+message GLMessage {
+  int64 groupId = 1;
+  int64 id = 2;
+  string msg = 3;
+  MState state = 4;
+  int32 floor = 5;
+  int32 atFloor = 6;
+  int64 time = 7;
+  int64 userId = 8;
+  UEntity entity = 9;
 }
 
 message GMember {
-  int64 userId = 1;
-  UEntity entity = 2;
-  GState state = 3;
-  int64 time = 4;
+  int64 id = 1;
+  int64 userId = 2;
+  UEntity entity = 3;
+  GState state = 4;
+  int64 time = 5;
+  int64 groupId = 6;
+  int32 floor = 7;
+  int32 atFloor = 8;
+  int64 readTime = 9;
 }

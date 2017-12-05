@@ -21,11 +21,44 @@ android {
             }
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file("../keystore")
+            storePassword "zdnuist"
+            keyAlias "zdnuist"
+            keyPassword "zdnuist"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            versionNameSuffix "-release"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+    }
+
+    productFlavors{
+        caipiao{
+            applicationId "com.pp.cai.piao"
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def apk = variant.flavorName
+        if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+            output.outputFile = new File(output.outputFile.parent, "${apk}.apk")
+        }
+
     }
 }
 

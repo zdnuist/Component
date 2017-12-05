@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import me.zdnuist.proxy.R;
@@ -50,7 +53,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
     if (zhiHu != null) {
       holder.titltView.setText(zhiHu.title);
       holder.linkView.setText(zhiHu.link);
-      holder.descView.setText(Html.fromHtml(zhiHu.des,FROM_HTML_MODE_LEGACY));
+//      holder.descView.setText(Html.fromHtml(zhiHu.des,FROM_HTML_MODE_LEGACY));
     }
 
   }
