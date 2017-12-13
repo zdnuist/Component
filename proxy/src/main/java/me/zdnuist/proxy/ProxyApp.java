@@ -1,6 +1,7 @@
 package me.zdnuist.proxy;
 
 import android.arch.persistence.room.Room;
+import cn.jpush.android.api.JPushInterface;
 import com.facebook.stetho.Stetho;
 import me.yokeyword.fragmentation.Fragmentation;
 import me.zdnuist.app.BaseApplication;
@@ -32,6 +33,9 @@ public class ProxyApp extends BaseApplication {
         .stackViewMode(Fragmentation.BUBBLE)
         .debug(BuildConfig.DEBUG)
              .install();
+
+    JPushInterface.setDebugMode(true);
+    JPushInterface.init(this);
   }
 
   public ProxyDatabase getDatabase() {

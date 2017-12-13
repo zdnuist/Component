@@ -3,4 +3,6 @@
   <string name="title_home">知乎精选</string>
   <string name="title_dashboard">Dashboard</string>
   <string name="title_notifications">Notifications</string>
+
+  <string name="str_tag_from">#来自 %s</string>
 </resources>

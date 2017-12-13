@@ -1,21 +1,19 @@
 package me.zdnuist.proxy.adapter;
 
-import static android.text.Html.FROM_HTML_MODE_LEGACY;
-
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import me.zdnuist.proxy.R;
+import me.zdnuist.proxy.ShowTextActivity;
+import me.zdnuist.proxy.WebViewActivity;
 import me.zdnuist.proxy.adapter.MyRecycleAdapter.ZhiHuViewHolder;
 import me.zdnuist.proxy.entity.ZhiHu;
 
@@ -49,11 +47,21 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
   @Override
   public void onBindViewHolder(ZhiHuViewHolder holder, int position) {
 
-    ZhiHu zhiHu = datas.get(position);
+    final ZhiHu zhiHu = datas.get(position);
     if (zhiHu != null) {
       holder.titltView.setText(zhiHu.title);
-      holder.linkView.setText(zhiHu.link);
+//      holder.linkView.setText(zhiHu.link);
 //      holder.descView.setText(Html.fromHtml(zhiHu.des,FROM_HTML_MODE_LEGACY));
+
+      holder.itemView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(v.getContext(), WebViewActivity.class);
+          intent.putExtra("_url" , zhiHu.link);
+          intent.putExtra("_title" , zhiHu.title);
+          v.getContext().startActivity(intent);
+        }
+      });
     }
 
   }
@@ -73,15 +81,24 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<ZhiHuViewHolder> {
       super(itemView);
       titltView = itemView.findViewById(R.id.textView);
       linkView = itemView.findViewById(R.id.textView2);
-      linkView.setAutoLinkMask(Linkify.WEB_URLS);
+//      linkView.setAutoLinkMask(Linkify.WEB_URLS);
       descView = itemView.findViewById(R.id.webView);
       descView.setAutoLinkMask(Linkify.WEB_URLS);
+
     }
 
-    public void bindTo(ZhiHu zhiHu) {
+    public void bindTo(final ZhiHu zhiHu) {
       titltView.setText(zhiHu.title);
       linkView.setText(zhiHu.link);
 //      descView.setText(Html.fromHtml(zhiHu.des));
+      linkView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(v.getContext(), WebViewActivity.class);
+          intent.putExtra("_url" , zhiHu.link);
+          v.getContext().startActivity(intent);
+        }
+      });
     }
 
     public void clear() {

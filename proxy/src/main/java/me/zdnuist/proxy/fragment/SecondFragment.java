@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import me.zdnuist.module.fragmentation.BaseSupportFragment;
 import me.zdnuist.proxy.R;
-import me.zdnuist.proxy.fragment_new.PlaceHolderFragment;
+import me.zdnuist.proxy.fragment_new.BoradFragment;
 
 /**
  * Created by zd on 2017/9/18.
@@ -31,8 +31,8 @@ public class SecondFragment extends BaseSupportFragment{
   public void onLazyInitView(@Nullable Bundle savedInstanceState) {
     super.onLazyInitView(savedInstanceState);
 
-    if (findChildFragment(PageFragment.class) == null) {
-      loadRootFragment(R.id.fl_first_container, PlaceHolderFragment.newInstance());
+    if (findChildFragment(BoradFragment.class) == null) {
+      loadRootFragment(R.id.fl_first_container, new BoradFragment());
     }
   }
 }

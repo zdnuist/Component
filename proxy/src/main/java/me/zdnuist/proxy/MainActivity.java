@@ -108,4 +108,8 @@ public class MainActivity extends BaseFragmentWrapperActivity {
     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
   }
 
+  @Override
+  public void onBackPressedSupport() {
+    finish();
+  }
 }
