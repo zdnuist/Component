@@ -1,5 +1,5 @@
-include ':proxy', ':push_jg'
-//':DeviceInfo', ':picgallery', ':proxy', ':editwebview', ':mocktest', ':protogen'
+include ':proxy', ':push_jg', ':permissionmodule' ,':DeviceInfo'
+// , ':picgallery', ':proxy', ':editwebview', ':mocktest', ':protogen'
 
 include ':lifecycleModule'
 project(':lifecycleModule').projectDir = new File('Architecture/LifecycleModule')

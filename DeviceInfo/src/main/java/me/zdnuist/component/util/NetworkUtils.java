@@ -2,8 +2,10 @@ package me.zdnuist.component.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import java.io.BufferedReader;
@@ -16,6 +18,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
 import java.util.Enumeration;
+import me.zdnuist.component.entity.LocalNetInfo;
 import me.zdnuist.component.entity.NetworkInfo;
 
 /**
@@ -104,6 +107,53 @@ public class NetworkUtils {
         ((ip >> 8) & 0xFF) + "." +
         ((ip >> 16) & 0xFF) + "." +
         (ip >> 24 & 0xFF);
+  }
+
+  public static LocalNetInfo getLocalNetInfo(Context context){
+    LocalNetInfo netInfo = new LocalNetInfo();
+    netInfo.mac = UMUtils.getMac(context);
+    netInfo.operatorName = UMUtils.getNetworkOperatorName(context);
+    netInfo.dhcp = getWifiDhcpInfo(context);
+    netInfo.wifiInfo = getConnectWifiInfo(context);
+    netInfo.proxy = getWifiProxyInfo();
+    return netInfo;
+  }
+
+  /**
+   * 获取dhcp信息
+   * @param context
+   * @return
+   */
+  public static String getWifiDhcpInfo(Context context){
+    WifiManager wifiManager=(WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    if (wifiManager.isWifiEnabled()){
+      DhcpInfo dhcpInfo=wifiManager.getDhcpInfo();
+      return dhcpInfo.toString();
+    }
+    return "";
+  }
+
+  /**
+   * 获取wifi连接信息
+   * @param context
+   * @return
+   */
+  public static String getConnectWifiInfo(Context context){
+    WifiManager wifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    if (wifiManager != null && wifiManager.isWifiEnabled()) {
+      WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+      return wifiInfo.toString();
+    }
+    return "";
+  }
+
+  /**
+   * 获取wifi代理
+   * @return
+   */
+  public static String getWifiProxyInfo(){
+    String host = !TextUtils.isEmpty(android.net.Proxy.getDefaultHost()) ? android.net.Proxy.getDefaultHost():"";
+    return host+":"+android.net.Proxy.getDefaultPort();
   }
 
 }

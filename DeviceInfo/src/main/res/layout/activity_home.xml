@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="16dp"
+  tools:context="me.zdnuist.component.HomeActivity">
+
+  <LinearLayout
+    android:id="@+id/id_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+    <Button
+      android:id="@+id/id_func_1"
+      style="@style/style_func_btn"
+      android:text="获取设备信息"
+      />
+
+    <Button
+      android:id="@+id/id_func_2"
+      style="@style/style_func_btn"
+      android:text="获取网络信息"
+      android:visibility="gone"
+      />
+
+    <Button
+      android:id="@+id/id_func_3"
+      style="@style/style_func_btn"
+      android:text="获取感应光照信息"
+      />
+
+    <Button
+      android:id="@+id/id_func_4"
+      style="@style/style_func_btn"
+      android:text="获取本地WIFI信息"
+      />
+
+    </LinearLayout>
+
+</ScrollView>

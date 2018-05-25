@@ -6,6 +6,7 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@color/colorBg</item>
   </style>
 
   <style name="AppTheme.NoActionBar">
@@ -16,5 +17,13 @@
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+  <style name="style_func_btn">
+    <item name="android:layout_width">200dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:background">@drawable/bg_func_btn</item>
+    <item name="android:textColor">@color/colorAccent</item>
+    <item name="android:layout_marginTop">10dp</item>
+    </style>
 
 </resources>
