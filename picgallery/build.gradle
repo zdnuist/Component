@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.1"
 
     defaultConfig {
-        applicationId "me.zdnuist.pic.gallery"
+        applicationId "com.qq.mobile.gallery"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
@@ -22,6 +22,13 @@ android {
             keyAlias "zdnuist"
             keyPassword "zdnuist"
         }
+
+        debug {
+            storeFile file("../keystore")
+            storePassword "zdnuist"
+            keyAlias "zdnuist"
+            keyPassword "zdnuist"
+        }
     }
 
 
@@ -31,7 +38,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
     }
+}
+
+android.applicationVariants.all{ variant ->
+    variant.outputs.each { output ->
+
+        def apk = "Yomg-${variant.versionName}-${variant.buildType.name}"
+        if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+            output.outputFile = new File(output.outputFile.parent, "${apk}.apk")
+        }
+    }
+
 }
 
 dependencies {

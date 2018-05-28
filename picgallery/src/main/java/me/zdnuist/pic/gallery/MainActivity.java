@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
                         Transition<? super File> transition) {
                       Log.d(TAG, "File:" + resource.getPath());
                       String targetName = obj.downloadUrl.substring(obj.downloadUrl.lastIndexOf("/")+1);
-                      FileUtil.copyFile(resource,targetName);
+                      FileUtil.copyFile(MainActivity.this,resource,targetName);
 
                     }
                   });

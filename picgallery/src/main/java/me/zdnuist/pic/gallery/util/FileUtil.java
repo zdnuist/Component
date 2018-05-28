@@ -1,6 +1,8 @@
 package me.zdnuist.pic.gallery.util;
 
+import android.content.Context;
 import android.os.Environment;
+import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,7 +16,7 @@ public class FileUtil {
 
   public final static String SDCARD_DIR = Environment.getExternalStorageDirectory().getPath()+ "/PicGallery/";
 
-  public static void copyFile(File originFile, String targetName){
+  public static void copyFile(Context context,File originFile, String targetName){
 
     FileOutputStream fileOutputStream = null;
     FileInputStream fileInputStream = null;
@@ -34,6 +36,7 @@ public class FileUtil {
       while((len = fileInputStream.read(buffer)) != -1){
         fileOutputStream.write(buffer,0,len);
       }
+      Toast.makeText(context, "图片成功保存在目录" + SDCARD_DIR , Toast.LENGTH_SHORT).show();
     } catch (IOException e) {
       e.printStackTrace();
     }finally {
